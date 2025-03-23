@@ -1,0 +1,95 @@
+from abc import ABC, abstractmethod
+from datetime import datetime
+
+
+class Cliente:
+    def __init__(self, nome: str, cpf: str):
+        self.nome = nome
+        self.cpf = cpf
+        self.contas = []
+
+    def adicionar_conta(self, conta):
+        self.contas.append(conta)
+
+    def __str__(self):
+        return f"Cliente: {self.nome}, CPF: {self.cpf}"
+
+
+class Conta(ABC):
+    def __init__(self, numero: str, cliente: Cliente, saldo: float = 0.0):
+        self.numero = numero
+        self.saldo = saldo
+        self.cliente = cliente
+        self.historico = []
+
+    @abstractmethod
+    def sacar(self, valor: float):
+        pass
+
+    def depositar(self, valor: float):
+        if valor > 0:
+            self.saldo += valor
+            self.registrar_transacao(f"Depósito: +R$ {valor:.2f}")
+            print(f"Depósito de R$ {valor:.2f} realizado com sucesso!")
+        else:
+            print("O valor do depósito deve ser positivo.")
+
+    def registrar_transacao(self, descricao: str):
+        data_hora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        self.historico.append(f"{data_hora} - {descricao}")
+
+    def exibir_extrato(self):
+        print(f"\nExtrato da Conta {self.numero}:")
+        for transacao in self.historico:
+            print(transacao)
+        print(f"Saldo atual: R$ {self.saldo:.2f}")
+
+    def __str__(self):
+        return f"Conta {self.numero} - Cliente: {self.cliente.nome}, Saldo: R$ {self.saldo:.2f}"
+
+
+class ContaCorrente(Conta):
+    def __init__(self, numero: str, cliente: Cliente, saldo: float = 0.0, limite: float = 500.0):
+        super().__init__(numero, cliente, saldo)
+        self.limite = limite
+
+    def sacar(self, valor: float):
+        if 0 < valor <= (self.saldo + self.limite):
+            self.saldo -= valor
+            self.registrar_transacao(f"Saque: -R$ {valor:.2f}")
+            print(f"Saque de R$ {valor:.2f} realizado com sucesso!")
+        else:
+            print("Saldo insuficiente para o saque.")
+
+
+class ContaPoupanca(Conta):
+    def sacar(self, valor: float):
+        if 0 < valor <= self.saldo:
+            self.saldo -= valor
+            self.registrar_transacao(f"Saque: -R$ {valor:.2f}")
+            print(f"Saque de R$ {valor:.2f} realizado com sucesso!")
+        else:
+            print("Saldo insuficiente para o saque.")
+
+
+# Criando clientes
+cliente1 = Cliente("João Silva", "123.456.789-00")
+cliente2 = Cliente("Maria Souza", "987.654.321-00")
+
+# Criando contas
+conta1 = ContaCorrente("001", cliente1, saldo=1000)
+conta2 = ContaPoupanca("002", cliente2, saldo=500)
+
+# Associando contas aos clientes
+cliente1.adicionar_conta(conta1)
+cliente2.adicionar_conta(conta2)
+
+# Realizando operações
+conta1.depositar(500)
+conta1.sacar(1300)  # Usa o limite
+conta2.sacar(200)
+conta2.depositar(100)
+
+# Exibindo extratos
+conta1.exibir_extrato()
+conta2.exibir_extrato()
