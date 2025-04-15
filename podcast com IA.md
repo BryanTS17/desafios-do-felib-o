@@ -15,7 +15,7 @@ Este podcast de 5 minutos oferece um passeio rápido, mas profundo, pelo mundo d
 ## 🚀 Resultados
 O episódio é uma introdução acessível e estimulante ao campo das IAs Generativas, ideal para quem busca uma compreensão rápida do assunto.
 
-[LINK PARA O PODCAST AQUI](C:\Users\CPU\Music\audios aléatorios\Podcast em Português com IA no NotebookLM.wav)
+[LINK PARA O PODCAST AQUI](https://github.com/BryanTS17/desafios-do-felib-o/blob/main/Podcast%20em%20Português%20com%20IA%20no%20NotebookLM.wav)
 
 <audio controls>
   <source src="C:\Users\CPU\Music\audios aléatorios\Podcast em Português com IA no NotebookLM.wav" type="audio/wav">
