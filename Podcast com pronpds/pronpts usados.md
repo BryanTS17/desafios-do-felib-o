@@ -2,7 +2,7 @@
 
 ## Capa/Imagen
 
-![capa](C:\Users\CPU\Pictures\capturas de tela\apresentador.png)
+![capa]("C:\Users\CPU\Pictures\capturas de tela\apresentador.png")
 
 Crie uma imagem em estilo pixel art de RPG com as seguintes características:
 
